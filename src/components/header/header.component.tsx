@@ -1,19 +1,25 @@
 import { BsCart3 } from 'react-icons/bs'
 
-import './header.styles.css'
 import {
   HeaderContainer,
   HeaderItem,
   HeaderItems,
   HeaderTitle
 } from './header.styles'
+import { useNavigate } from 'react-router-dom'
 const Header = () => {
+  const navigate = useNavigate()
+
+  const habndleLoginClick = () => {
+    navigate('/login')
+  }
+
   return (
     <HeaderContainer>
       <HeaderTitle>CLUB CLOTHING</HeaderTitle>
       <HeaderItems>
         <HeaderItem>Explorar</HeaderItem>
-        <HeaderItem>Login</HeaderItem>
+        <HeaderItem onClick={habndleLoginClick}>Login</HeaderItem>
         <HeaderItem>Criar Conta</HeaderItem>
         <HeaderItem>
           <BsCart3 size={25} />
