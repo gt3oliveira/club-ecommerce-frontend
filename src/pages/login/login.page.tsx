@@ -64,7 +64,7 @@ const LoginPage = () => {
           )}
         </LoginInputContainer>
         <CustomButton
-          onClick={() => handleSubmit(handleSubmitPress)()}
+          onClick={handleSubmit(handleSubmitPress)}
           icon={<FiLogIn size={18} />}>
           Entrar
         </CustomButton>
