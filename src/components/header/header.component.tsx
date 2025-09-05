@@ -10,8 +10,12 @@ import { useNavigate } from 'react-router-dom'
 const Header = () => {
   const navigate = useNavigate()
 
-  const habndleLoginClick = () => {
+  const handleLoginClick = () => {
     navigate('/login')
+  }
+
+  const handleSignUpClick = () => {
+    navigate('/sign-up')
   }
 
   return (
@@ -19,8 +23,8 @@ const Header = () => {
       <HeaderTitle>CLUB CLOTHING</HeaderTitle>
       <HeaderItems>
         <HeaderItem>Explorar</HeaderItem>
-        <HeaderItem onClick={habndleLoginClick}>Login</HeaderItem>
-        <HeaderItem>Criar Conta</HeaderItem>
+        <HeaderItem onClick={handleLoginClick}>Login</HeaderItem>
+        <HeaderItem onClick={handleSignUpClick}>Criar Conta</HeaderItem>
         <HeaderItem>
           <BsCart3 size={25} />
           <p style={{ marginLeft: '5px' }}>5</p>
