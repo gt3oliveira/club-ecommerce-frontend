@@ -14,12 +14,17 @@ import {
 import CustomInput from '../../components/custom-input/custom-input.component'
 import InputErrorMessage from '../../components/input-error-massage/input-error-massage.component'
 
+type LoginForm = {
+  email: string
+  password: string
+}
+
 const LoginPage = () => {
   const {
     handleSubmit,
     register,
     formState: { errors }
-  } = useForm()
+  } = useForm<LoginForm>()
 
   const handleSubmitPress = (data: any) => {
     console.log(data)

@@ -11,7 +11,7 @@ import {
 } from './sign-up.styles'
 import InputErrorMessage from '../../components/input-error-massage/input-error-massage.component'
 
-interface FormDataType {
+type SignupForm = {
   name: string
   lastName: string
   email: string
@@ -25,7 +25,7 @@ const SignupPage = () => {
     register,
     watch,
     formState: { errors }
-  } = useForm<FormDataType>()
+  } = useForm<SignupForm>()
 
   const watchPassword = watch('password')
 
