@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 // import axios from 'axios'
 import { CategoriesMock, Category } from '../../types/category.types'
-import './categories.styles.css'
 import CategoryItem from '../category-item/category-item.component'
+import { CategoriesContainer, CategoriesContent } from './categories.styles'
 // import { env } from '../../config/env.config'
 
 const CategoriesPage = () => {
@@ -23,15 +23,15 @@ const CategoriesPage = () => {
   }, [])
 
   return (
-    <div className="category-container">
-      <div className="category-content">
+    <CategoriesContainer>
+      <CategoriesContent>
         {categories.map((category) => (
           <div key={category.id}>
             <CategoryItem category={category} />
           </div>
         ))}
-      </div>
-    </div>
+      </CategoriesContent>
+    </CategoriesContainer>
   )
 }
 
