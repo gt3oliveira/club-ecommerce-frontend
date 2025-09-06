@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form'
 import validator from 'validator'
 import { FiLogIn } from 'react-icons/fi'
+import { BiLoaderCircle } from 'react-icons/bi'
 import CustomButton from '../../components/custom-button/custom-button.component'
 import CustomInput from '../../components/custom-input/custom-input.component'
 import {
@@ -10,9 +11,13 @@ import {
   SignUpInputContainer
 } from './sign-up.styles'
 import InputErrorMessage from '../../components/input-error-massage/input-error-massage.component'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { auth, db } from '../../config/firebase.config'
+import { addDoc, collection } from 'firebase/firestore'
+import { useState } from 'react'
 
 type SignupForm = {
-  name: string
+  firstName: string
   lastName: string
   email: string
   password: string
@@ -27,10 +32,28 @@ const SignupPage = () => {
     formState: { errors }
   } = useForm<SignupForm>()
 
+  const [isLoading, setIsLoading] = useState(false)
   const watchPassword = watch('password')
 
-  const handleSubmitPress = (data: any) => {
-    console.log(data)
+  const handleSubmitPress = async (data: SignupForm) => {
+    try {
+      setIsLoading(true)
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      )
+      await addDoc(collection(db, 'users'), {
+        id: userCredentials.user.uid,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: userCredentials.user.email
+      })
+    } catch (error) {
+      console.log({ error })
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -42,12 +65,12 @@ const SignupPage = () => {
           <p>Nome</p>
           <CustomInput
             placeholder="Digite seu nome"
-            hasError={!!errors?.name}
-            {...register('name', {
+            hasError={!!errors?.firstName}
+            {...register('firstName', {
               required: true
             })}
           />
-          {errors?.name?.type === 'required' && (
+          {errors?.firstName?.type === 'required' && (
             <InputErrorMessage>O nome é obrigatória.</InputErrorMessage>
           )}
         </SignUpInputContainer>
@@ -88,9 +111,15 @@ const SignupPage = () => {
             placeholder="Digite sua senha"
             hasError={!!errors?.password}
             {...register('password', {
-              required: true
+              required: true,
+              validate: (value) => value.length >= 6
             })}
           />
+          {errors?.password?.type === 'validate' && (
+            <InputErrorMessage>
+              A senha deve ter no mínimo 6 caracteres.
+            </InputErrorMessage>
+          )}
           {errors?.password?.type === 'required' && (
             <InputErrorMessage>A senha é obrigatória.</InputErrorMessage>
           )}
@@ -120,7 +149,10 @@ const SignupPage = () => {
 
         <CustomButton
           onClick={handleSubmit(handleSubmitPress)}
-          icon={<FiLogIn size={18} />}>
+          icon={
+            isLoading ? <BiLoaderCircle size={18} /> : <FiLogIn size={18} />
+          }
+          disabled={isLoading}>
           Criar Conta
         </CustomButton>
       </SignUpContent>
