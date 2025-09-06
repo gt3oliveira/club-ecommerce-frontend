@@ -13,6 +13,8 @@ import {
 } from './login.styles'
 import CustomInput from '../../components/custom-input/custom-input.component'
 import InputErrorMessage from '../../components/input-error-massage/input-error-massage.component'
+import { AuthError, signInWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '../../config/firebase.config'
 
 type LoginForm = {
   email: string
@@ -23,11 +25,25 @@ const LoginPage = () => {
   const {
     handleSubmit,
     register,
+    setError,
     formState: { errors }
   } = useForm<LoginForm>()
 
-  const handleSubmitPress = (data: any) => {
-    console.log(data)
+  const handleSubmitPress = async (data: LoginForm) => {
+    try {
+      await signInWithEmailAndPassword(auth, data.email, data.password)
+    } catch (error) {
+      const _error = error as AuthError
+
+      if (_error.code === 'auth/invalid-login-credentials') {
+        setError('email', {
+          type: 'invalid-credentials'
+        })
+        setError('password', {
+          type: 'invalid-credentials'
+        })
+      }
+    }
   }
 
   return (
@@ -68,6 +84,19 @@ const LoginPage = () => {
             <InputErrorMessage>O senha é obrigatória.</InputErrorMessage>
           )}
         </LoginInputContainer>
+
+        {(errors?.email?.type || errors?.password?.type) ===
+          'invalid-credentials' && (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              paddingBottom: '15px'
+            }}>
+            <InputErrorMessage>Email ou senha são inválidos.</InputErrorMessage>
+          </div>
+        )}
+
         <CustomButton
           onClick={handleSubmit(handleSubmitPress)}
           icon={<FiLogIn size={18} />}>
