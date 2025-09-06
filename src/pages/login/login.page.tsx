@@ -13,8 +13,13 @@ import {
 } from './login.styles'
 import CustomInput from '../../components/custom-input/custom-input.component'
 import InputErrorMessage from '../../components/input-error-massage/input-error-massage.component'
-import { AuthError, signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../../config/firebase.config'
+import {
+  AuthError,
+  signInWithEmailAndPassword,
+  signInWithPopup
+} from 'firebase/auth'
+import { auth, db, googleProvider } from '../../config/firebase.config'
+import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
 
 type LoginForm = {
   email: string
@@ -46,11 +51,42 @@ const LoginPage = () => {
     }
   }
 
+  const handleGoogleLoginPress = async () => {
+    try {
+      const userCredentials = await signInWithPopup(auth, googleProvider)
+
+      const querySnapshot = await getDocs(
+        query(
+          collection(db, 'users'),
+          where('id', '==', userCredentials.user.uid)
+        )
+      )
+
+      const user = querySnapshot.docs[0]?.data()
+
+      if (!user) {
+        return await addDoc(collection(db, 'users'), {
+          id: userCredentials.user.uid,
+          firstName: userCredentials.user.displayName?.split(' ')[0],
+          lastName: userCredentials.user.displayName?.split(' ')[1],
+          email: userCredentials.user.email,
+          provider: 'google'
+        })
+      }
+
+      return null
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <LoginContainer>
       <LoginContent>
         <LoginHeadline>Entre com a sua conta</LoginHeadline>
-        <CustomButton icon={<BsGoogle size={18} />}>
+        <CustomButton
+          icon={<BsGoogle size={18} />}
+          onClick={handleGoogleLoginPress}>
           Entrar com o Google
         </CustomButton>
         <LoginSubtitle>ou entre com o seu email</LoginSubtitle>
