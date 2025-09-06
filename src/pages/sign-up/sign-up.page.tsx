@@ -11,7 +11,11 @@ import {
   SignUpInputContainer
 } from './sign-up.styles'
 import InputErrorMessage from '../../components/input-error-massage/input-error-massage.component'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import {
+  AuthError,
+  AuthErrorCodes,
+  createUserWithEmailAndPassword
+} from 'firebase/auth'
 import { auth, db } from '../../config/firebase.config'
 import { addDoc, collection } from 'firebase/firestore'
 import { useState } from 'react'
@@ -29,6 +33,7 @@ const SignupPage = () => {
     handleSubmit,
     register,
     watch,
+    setError,
     formState: { errors }
   } = useForm<SignupForm>()
 
@@ -50,6 +55,22 @@ const SignupPage = () => {
         email: userCredentials.user.email
       })
     } catch (error) {
+      const _error = error as AuthError
+
+      if (_error.code === AuthErrorCodes.EMAIL_EXISTS) {
+        return setError('email', {
+          type: 'email-exists',
+          message: 'Este e-mail já está cadastrado.'
+        })
+      }
+
+      if (_error.code === AuthErrorCodes.WEAK_PASSWORD) {
+        return setError('password', {
+          type: 'weak-password',
+          message: 'A senha deve ter no mínimo 6 caracteres.'
+        })
+      }
+
       console.log({ error })
     } finally {
       setIsLoading(false)
@@ -97,6 +118,9 @@ const SignupPage = () => {
               validate: (value) => validator.isEmail(value)
             })}
           />
+          {errors?.email?.type === 'email-exists' && (
+            <InputErrorMessage>{errors.email.message}</InputErrorMessage>
+          )}
           {errors?.email?.type === 'validate' && (
             <InputErrorMessage>Digite um email válido.</InputErrorMessage>
           )}
@@ -111,14 +135,11 @@ const SignupPage = () => {
             placeholder="Digite sua senha"
             hasError={!!errors?.password}
             {...register('password', {
-              required: true,
-              validate: (value) => value.length >= 6
+              required: true
             })}
           />
-          {errors?.password?.type === 'validate' && (
-            <InputErrorMessage>
-              A senha deve ter no mínimo 6 caracteres.
-            </InputErrorMessage>
+          {errors?.password?.type === 'weak-password' && (
+            <InputErrorMessage>{errors.password.message}</InputErrorMessage>
           )}
           {errors?.password?.type === 'required' && (
             <InputErrorMessage>A senha é obrigatória.</InputErrorMessage>
