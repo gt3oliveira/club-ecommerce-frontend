@@ -4,6 +4,7 @@ import {
   SnapshotOptions
 } from 'firebase/firestore'
 import { Category } from '../types/category.types'
+import { User } from '../types/user.types'
 
 export const categoryConverter = {
   toFirestore(category: Category): DocumentData {
@@ -21,6 +22,25 @@ export const categoryConverter = {
       displayName: data.displayName,
       imageUrl: data.imageUrl,
       produtcs: data.produtcs
+    }
+  }
+}
+
+export const userConverter = {
+  toFirestore(user: User): DocumentData {
+    return { ...user }
+  },
+  fromFirestore(
+    snapshot: QueryDocumentSnapshot,
+    options: SnapshotOptions
+  ): User {
+    const data = snapshot.data(options)
+
+    return {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      provider: data.provider
     }
   }
 }
