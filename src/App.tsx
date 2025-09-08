@@ -9,6 +9,7 @@ import { auth, db } from './config/firebase.config'
 import { UserContext } from './contexts/user.context'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import { userConverter } from './converters/firestore.converters'
+import LoadingPage from './components/loading/loading.component'
 
 const App: FunctionComponent = () => {
   const { isAuthenticated, loginUser, logoutUser } = useContext(UserContext)
@@ -38,7 +39,7 @@ const App: FunctionComponent = () => {
   })
 
   if (isInitializing) {
-    return null
+    return <LoadingPage />
   }
 
   return (
