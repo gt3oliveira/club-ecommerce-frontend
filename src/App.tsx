@@ -10,6 +10,7 @@ import { UserContext } from './contexts/user.context'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import { userConverter } from './converters/firestore.converters'
 import LoadingPage from './components/loading/loading.component'
+import ExplorerPage from './pages/explorer/explorer.page'
 
 const App: FunctionComponent = () => {
   const { isAuthenticated, loginUser, logoutUser } = useContext(UserContext)
@@ -49,6 +50,7 @@ const App: FunctionComponent = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/sign-up" element={<SignupPage />} />
+        <Route path="/explore" element={<ExplorerPage />} />
       </Routes>
     </BrowserRouter>
   )
