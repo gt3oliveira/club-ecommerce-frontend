@@ -20,9 +20,10 @@ import {
 } from 'firebase/auth'
 import { auth, db, googleProvider } from '../../config/firebase.config'
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../contexts/user.context'
 import { useNavigate } from 'react-router-dom'
+import LoadingPage from '../../components/loading/loading.component'
 
 type LoginForm = {
   email: string
@@ -32,6 +33,8 @@ type LoginForm = {
 const LoginPage = () => {
   const { isAuthenticated } = useContext(UserContext)
   const navigate = useNavigate()
+
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -48,6 +51,7 @@ const LoginPage = () => {
 
   const handleSubmitPress = async (data: LoginForm) => {
     try {
+      setIsLoading(true)
       await signInWithEmailAndPassword(auth, data.email, data.password)
     } catch (error) {
       const _error = error as AuthError
@@ -60,11 +64,14 @@ const LoginPage = () => {
           type: 'invalid-credentials'
         })
       }
+    } finally {
+      setIsLoading(false)
     }
   }
 
   const handleGoogleLoginPress = async () => {
     try {
+      setIsLoading(true)
       const userCredentials = await signInWithPopup(auth, googleProvider)
 
       const querySnapshot = await getDocs(
@@ -89,11 +96,14 @@ const LoginPage = () => {
       return null
     } catch (error) {
       console.log(error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
   return (
     <LoginContainer>
+      {isLoading && <LoadingPage />}
       <LoginContent>
         <LoginHeadline>Entre com a sua conta</LoginHeadline>
         <CustomButton

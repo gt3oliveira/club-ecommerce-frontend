@@ -1,7 +1,6 @@
 import { useForm } from 'react-hook-form'
 import validator from 'validator'
 import { FiLogIn } from 'react-icons/fi'
-import { BiLoaderCircle } from 'react-icons/bi'
 import CustomButton from '../../components/custom-button/custom-button.component'
 import CustomInput from '../../components/custom-input/custom-input.component'
 import {
@@ -21,6 +20,7 @@ import { addDoc, collection } from 'firebase/firestore'
 import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../contexts/user.context'
 import { useNavigate } from 'react-router-dom'
+import LoadingPage from '../../components/loading/loading.component'
 
 type SignupForm = {
   firstName: string
@@ -91,6 +91,8 @@ const SignupPage = () => {
 
   return (
     <SignUpContainer>
+      {isLoading && <LoadingPage />}
+
       <SignUpContent>
         <SignUpHeadline>Crie sua conta</SignUpHeadline>
 
@@ -182,10 +184,7 @@ const SignupPage = () => {
 
         <CustomButton
           onClick={handleSubmit(handleSubmitPress)}
-          icon={
-            isLoading ? <BiLoaderCircle size={18} /> : <FiLogIn size={18} />
-          }
-          disabled={isLoading}>
+          icon={<FiLogIn size={18} />}>
           Criar Conta
         </CustomButton>
       </SignUpContent>
