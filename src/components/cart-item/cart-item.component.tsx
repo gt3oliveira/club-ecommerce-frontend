@@ -31,7 +31,7 @@ const CartItem: FunctionComponent<CartItemProps> = ({
           {Intl.NumberFormat('pt-BR', {
             style: 'currency',
             currency: 'BRL'
-          }).format(cartProduct.price)}
+          }).format(cartProduct.price * cartProduct.quantity)}
         </p>
         <CartItemQuantity>
           <AiOutlineMinus
