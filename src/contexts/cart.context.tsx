@@ -23,6 +23,18 @@ const CartContextProvider: FunctionComponent = ({ children }) => {
   const toggleCart = () => setIsVisible(!isVisible)
 
   const addProductCart = (product: Product) => {
+    const productExists = products.some((p) => p.id === product.id)
+
+    if (productExists) {
+      return setProducts((products) =>
+        products.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        )
+      )
+    }
+
     setProducts((prev) => [...prev, { ...product, quantity: 1 }])
   }
 
