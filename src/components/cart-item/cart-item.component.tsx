@@ -11,9 +11,17 @@ import { AiOutlinePlus, AiOutlineMinus, AiOutlineClose } from 'react-icons/ai'
 
 interface CartItemProps {
   cartProduct: CartProduct
+  incrementProductQuantity: (productId: string) => void
+  decrementProductQuantity: (productId: string) => void
+  removeProductToCart: (productId: string) => void
 }
 
-const CartItem: FunctionComponent<CartItemProps> = ({ cartProduct }) => {
+const CartItem: FunctionComponent<CartItemProps> = ({
+  cartProduct,
+  decrementProductQuantity,
+  incrementProductQuantity,
+  removeProductToCart
+}) => {
   return (
     <CartItemContainer>
       <CartItemImage imageUrl={cartProduct.imageUrl} />
@@ -26,14 +34,26 @@ const CartItem: FunctionComponent<CartItemProps> = ({ cartProduct }) => {
           }).format(cartProduct.price)}
         </p>
         <CartItemQuantity>
-          <AiOutlineMinus onClick={() => {}} size={20} />
+          <AiOutlineMinus
+            onClick={() =>
+              cartProduct.quantity > 1 &&
+              decrementProductQuantity(cartProduct.id)
+            }
+            size={20}
+          />
           <p>{cartProduct.quantity}</p>
-          <AiOutlinePlus onClick={() => {}} size={20} />
+          <AiOutlinePlus
+            onClick={() => incrementProductQuantity(cartProduct.id)}
+            size={20}
+          />
         </CartItemQuantity>
       </CartItemInfo>
 
       <RemoveButton>
-        <AiOutlineClose onClick={() => {}} size={20} />
+        <AiOutlineClose
+          onClick={() => removeProductToCart(cartProduct.id)}
+          size={20}
+        />
       </RemoveButton>
     </CartItemContainer>
   )
