@@ -11,10 +11,15 @@ import { BsCartCheck } from 'react-icons/bs'
 import { CartContext } from '../../contexts/cart.context'
 import CartItem from '../cart-item/cart-item.component'
 
-interface CartProps {}
-
-const Cart: FunctionComponent<CartProps> = () => {
-  const { isVisible, toggleCart, products } = useContext(CartContext)
+const Cart: FunctionComponent = () => {
+  const {
+    isVisible,
+    toggleCart,
+    products,
+    incrementProductQuantity,
+    decrementProductQuantity,
+    removeProductToCart
+  } = useContext(CartContext)
 
   return (
     <CartContainer isVisible={isVisible}>
@@ -23,7 +28,13 @@ const Cart: FunctionComponent<CartProps> = () => {
         <CartTitle>Seu Carrinho</CartTitle>
 
         {products.map((product) => (
-          <CartItem key={product.id} cartProduct={product} />
+          <CartItem
+            key={product.id}
+            cartProduct={product}
+            incrementProductQuantity={incrementProductQuantity}
+            decrementProductQuantity={decrementProductQuantity}
+            removeProductToCart={removeProductToCart}
+          />
         ))}
 
         <CartTotal>R$ 0</CartTotal>
