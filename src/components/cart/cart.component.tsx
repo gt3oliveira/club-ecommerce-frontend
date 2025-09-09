@@ -18,7 +18,8 @@ const Cart: FunctionComponent = () => {
     products,
     incrementProductQuantity,
     decrementProductQuantity,
-    removeProductToCart
+    removeProductToCart,
+    totalCartPrice
   } = useContext(CartContext)
 
   return (
@@ -37,7 +38,12 @@ const Cart: FunctionComponent = () => {
           />
         ))}
 
-        <CartTotal>R$ 0</CartTotal>
+        <CartTotal>
+          {Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+          }).format(totalCartPrice)}
+        </CartTotal>
         <CustomButton icon={<BsCartCheck size={18} />}>
           Ir para o Checkout
         </CustomButton>
