@@ -10,6 +10,7 @@ interface ICartContext {
   removeProductToCart: (productId: string) => void
   incrementProductQuantity: (productId: string) => void
   decrementProductQuantity: (productId: string) => void
+  removeCartProducts: () => void
   productsCount: number
   totalCartPrice: number
 }
@@ -22,6 +23,7 @@ export const CartContext = createContext<ICartContext>({
   removeProductToCart: () => {},
   incrementProductQuantity: () => {},
   decrementProductQuantity: () => {},
+  removeCartProducts: () => {},
   productsCount: 0,
   totalCartPrice: 0
 })
@@ -89,9 +91,20 @@ const CartContextProvider: FunctionComponent = ({ children }) => {
     )
   }
 
+  const removeCartProducts = () => setProducts([])
+
+  useEffect(() => {
+    const existingProducts = localStorage.getItem('cart-products')
+
+    if (existingProducts) {
+      setProducts(JSON.parse(existingProducts))
+    }
+  }, [])
+
   useEffect(() => {
     getTotalCartPrice()
     getProductsAccount()
+    localStorage.setItem('cart-products', JSON.stringify(products))
   }, [products])
 
   return (
@@ -102,6 +115,7 @@ const CartContextProvider: FunctionComponent = ({ children }) => {
         toggleCart,
         addProductCart,
         productsCount,
+        removeCartProducts,
         removeProductToCart,
         incrementProductQuantity,
         decrementProductQuantity,
