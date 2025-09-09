@@ -1,4 +1,4 @@
-import { createContext, FunctionComponent, useState } from 'react'
+import { createContext, FunctionComponent, useEffect, useState } from 'react'
 import { CartProduct } from '../types/cart.types'
 import { Product } from '../types/product.types'
 
@@ -10,6 +10,8 @@ interface ICartContext {
   removeProductToCart: (productId: string) => void
   incrementProductQuantity: (productId: string) => void
   decrementProductQuantity: (productId: string) => void
+  productsCount: number
+  totalCartPrice: number
 }
 
 export const CartContext = createContext<ICartContext>({
@@ -19,12 +21,16 @@ export const CartContext = createContext<ICartContext>({
   addProductCart: () => {},
   removeProductToCart: () => {},
   incrementProductQuantity: () => {},
-  decrementProductQuantity: () => {}
+  decrementProductQuantity: () => {},
+  productsCount: 0,
+  totalCartPrice: 0
 })
 
 const CartContextProvider: FunctionComponent = ({ children }) => {
   const [isVisible, setIsVisible] = useState(false)
   const [products, setProducts] = useState<CartProduct[]>([])
+  const [totalCartPrice, setTotalCartPrice] = useState(0)
+  const [productsCount, setProductsCount] = useState(0)
 
   const toggleCart = () => setIsVisible(!isVisible)
 
@@ -68,6 +74,26 @@ const CartContextProvider: FunctionComponent = ({ children }) => {
     )
   }
 
+  const getTotalCartPrice = () => {
+    setTotalCartPrice(
+      products.reduce(
+        (total, product) => total + product.price * product.quantity,
+        0
+      )
+    )
+  }
+
+  const getProductsAccount = () => {
+    return setProductsCount(
+      products.reduce((total, product) => total + product.quantity, 0)
+    )
+  }
+
+  useEffect(() => {
+    getTotalCartPrice()
+    getProductsAccount()
+  }, [products])
+
   return (
     <CartContext.Provider
       value={{
@@ -75,9 +101,11 @@ const CartContextProvider: FunctionComponent = ({ children }) => {
         products,
         toggleCart,
         addProductCart,
+        productsCount,
         removeProductToCart,
         incrementProductQuantity,
-        decrementProductQuantity
+        decrementProductQuantity,
+        totalCartPrice
       }}>
       {children}
     </CartContext.Provider>
