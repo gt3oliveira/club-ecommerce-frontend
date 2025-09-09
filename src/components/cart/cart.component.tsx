@@ -9,17 +9,22 @@ import {
 import CustomButton from '../custom-button/custom-button.component'
 import { BsCartCheck } from 'react-icons/bs'
 import { CartContext } from '../../contexts/cart.context'
+import CartItem from '../cart-item/cart-item.component'
 
 interface CartProps {}
 
 const Cart: FunctionComponent<CartProps> = () => {
-  const { isVisible, toggleCart } = useContext(CartContext)
+  const { isVisible, toggleCart, products } = useContext(CartContext)
 
   return (
     <CartContainer isVisible={isVisible}>
       <CartEscapeArea onClick={toggleCart} />
       <CartContent>
         <CartTitle>Seu Carrinho</CartTitle>
+
+        {products.map((product) => (
+          <CartItem key={product.id} cartProduct={product} />
+        ))}
 
         <CartTotal>R$ 0</CartTotal>
         <CustomButton icon={<BsCartCheck size={18} />}>
