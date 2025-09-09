@@ -19,7 +19,8 @@ const Cart: FunctionComponent = () => {
     incrementProductQuantity,
     decrementProductQuantity,
     removeProductToCart,
-    totalCartPrice
+    totalCartPrice,
+    productsCount
   } = useContext(CartContext)
 
   return (
@@ -38,15 +39,21 @@ const Cart: FunctionComponent = () => {
           />
         ))}
 
-        <CartTotal>
-          {Intl.NumberFormat('pt-BR', {
-            style: 'currency',
-            currency: 'BRL'
-          }).format(totalCartPrice)}
-        </CartTotal>
-        <CustomButton icon={<BsCartCheck size={18} />}>
-          Ir para o Checkout
-        </CustomButton>
+        {productsCount > 0 ? (
+          <>
+            <CartTotal>
+              {Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+              }).format(totalCartPrice)}
+            </CartTotal>
+            <CustomButton icon={<BsCartCheck size={18} />}>
+              Ir para o Checkout
+            </CustomButton>
+          </>
+        ) : (
+          <p>Seu carrinho está vazio!</p>
+        )}
       </CartContent>
     </CartContainer>
   )
