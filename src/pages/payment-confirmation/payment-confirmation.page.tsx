@@ -5,11 +5,13 @@ import {
   PaymentConfirmationContent
 } from './payment-confirmation.styles'
 import { AiOutlineCheckCircle, AiOutlineHome } from 'react-icons/ai'
-import { useContext, useEffect } from 'react'
-import { UserContext } from '../../contexts/user.context'
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
 const PaymentConfirmation = () => {
-  const { isAuthenticated } = useContext(UserContext)
+  const { isAuthenticated } = useSelector(
+    (rootReducer: any) => rootReducer.userReducer
+  )
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
 
