@@ -5,15 +5,11 @@ import { CartActions } from './cart.actions'
 interface InitialState {
   isVisible: boolean
   products: CartProduct[]
-  productsCount: number
-  totalCartPrice: number
 }
 
 const initialState: InitialState = {
   isVisible: false,
-  products: [],
-  productsCount: 0,
-  totalCartPrice: 0
+  products: []
 }
 
 export const cartReducer = (
