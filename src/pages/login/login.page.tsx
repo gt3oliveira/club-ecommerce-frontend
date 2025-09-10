@@ -20,10 +20,10 @@ import {
 } from 'firebase/auth'
 import { auth, db, googleProvider } from '../../config/firebase.config'
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
-import { useContext, useEffect, useState } from 'react'
-import { UserContext } from '../../contexts/user.context'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import LoadingPage from '../../components/loading/loading.component'
+import { useSelector } from 'react-redux'
 
 type LoginForm = {
   email: string
@@ -31,7 +31,9 @@ type LoginForm = {
 }
 
 const LoginPage = () => {
-  const { isAuthenticated } = useContext(UserContext)
+  const { isAuthenticated } = useSelector(
+    (rootReducer: any) => rootReducer.userReducer
+  )
   const navigate = useNavigate()
 
   const [isLoading, setIsLoading] = useState(false)
