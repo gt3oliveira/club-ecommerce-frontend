@@ -3,11 +3,13 @@ import { CategoryContext } from '../../contexts/category.context'
 import LoadingPage from '../loading/loading.component'
 import { Container } from './categories-overview.styles'
 import CategoryOverview from '../category-overview/category-overview.component'
-import { UserContext } from '../../contexts/user.context'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const CategoriesOverview: FunctionComponent = () => {
-  const { isAuthenticated } = useContext(UserContext)
+  const { isAuthenticated } = useSelector(
+    (rootReducer: any) => rootReducer.userReducer
+  )
   const navigate = useNavigate()
   const { categories, isLoading, fetchCategories } = useContext(CategoryContext)
 
