@@ -1,4 +1,4 @@
-import { FunctionComponent, useContext } from 'react'
+import { FunctionComponent } from 'react'
 import {
   CartContainer,
   CartContent,
@@ -8,11 +8,15 @@ import {
 } from './cart.styles'
 import CustomButton from '../custom-button/custom-button.component'
 import { BsCartCheck } from 'react-icons/bs'
-import { CartContext } from '../../contexts/cart.context'
 import CartItem from '../cart-item/cart-item.component'
 import { useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../../hooks/redux.hooks'
-import { toggleCart } from '../../store/reducers/cart/cart.actions'
+import {
+  incrementCartProductQuantity,
+  decrementCartProductQuantity,
+  removeProductFromCart,
+  toggleCart
+} from '../../store/reducers/cart/cart.actions'
 import { useDispatch } from 'react-redux'
 import {
   selectProductsCount,
@@ -30,12 +34,6 @@ const Cart: FunctionComponent = () => {
   const totalCartPrice = useAppSelector(selectProductsTotalPrice)
   const productsCount = useAppSelector(selectProductsCount)
 
-  const {
-    incrementProductQuantity,
-    decrementProductQuantity,
-    removeProductToCart
-  } = useContext(CartContext)
-
   const handleCheckoutClick = () => {
     dispatch(toggleCart())
     navigate('/checkout')
@@ -43,6 +41,18 @@ const Cart: FunctionComponent = () => {
 
   const handleToggleCart = () => {
     dispatch(toggleCart())
+  }
+
+  const incrementProductQuantity = (productId: string) => {
+    dispatch(incrementCartProductQuantity(productId))
+  }
+
+  const decrementProductQuantity = (productId: string) => {
+    dispatch(decrementCartProductQuantity(productId))
+  }
+
+  const removeProductToCart = (productId: string) => {
+    dispatch(removeProductFromCart(productId))
   }
 
   return (
