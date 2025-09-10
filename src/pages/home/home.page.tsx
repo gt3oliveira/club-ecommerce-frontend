@@ -1,10 +1,12 @@
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import CategoriesPage from '../../components/categories/categories.component'
-import { UserContext } from '../../contexts/user.context'
+import { useSelector } from 'react-redux'
 
 const HomePage = () => {
-  const { isAuthenticated } = useContext(UserContext)
+  const { isAuthenticated } = useSelector(
+    (rootReducer: any) => rootReducer.userReducer
+  )
   const navigate = useNavigate()
 
   useEffect(() => {
