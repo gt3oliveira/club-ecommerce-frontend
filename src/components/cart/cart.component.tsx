@@ -14,20 +14,26 @@ import { useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../../hooks/redux.hooks'
 import { toggleCart } from '../../store/reducers/cart/cart.actions'
 import { useDispatch } from 'react-redux'
+import {
+  selectProductsCount,
+  selectProductsTotalPrice
+} from '../../store/reducers/cart/cart.selectors'
 
 const Cart: FunctionComponent = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const { isVisible, products } = useAppSelector(
     (rootReducer) => rootReducer.cartReducer
   )
-  const dispatch = useDispatch()
+
+  const totalCartPrice = useAppSelector(selectProductsTotalPrice)
+  const productsCount = useAppSelector(selectProductsCount)
+
   const {
     incrementProductQuantity,
     decrementProductQuantity,
-    removeProductToCart,
-    totalCartPrice,
-    productsCount
+    removeProductToCart
   } = useContext(CartContext)
 
   const handleCheckoutClick = () => {
