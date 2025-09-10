@@ -15,12 +15,13 @@ import { signOut } from 'firebase/auth'
 import { auth } from '../../config/firebase.config'
 import { logoutUser } from '../../store/reducers/user/user.actions'
 import { useAppSelector } from '../../hooks/redux.hooks'
+import { toggleCart } from '../../store/reducers/cart/cart.actions'
 const Header = () => {
   const { isAuthenticated } = useAppSelector(
     (rootReducer) => rootReducer.userReducer
   )
   const dispatch = useDispatch()
-  const { toggleCart, productsCount } = useContext(CartContext)
+  const { productsCount } = useContext(CartContext)
   const navigate = useNavigate()
 
   const handleLoginClick = () => {
@@ -44,6 +45,10 @@ const Header = () => {
     signOut(auth)
   }
 
+  const handleToggleCart = () => {
+    dispatch(toggleCart())
+  }
+
   return (
     <HeaderContainer>
       <HeaderTitle onClick={handleLogoClick}>CLUB CLOTHING</HeaderTitle>
@@ -58,7 +63,7 @@ const Header = () => {
           <>
             <HeaderItem onClick={handleExplorerClick}>Explorar</HeaderItem>
             <HeaderItem onClick={handleSignOutClick}>Sair</HeaderItem>
-            <HeaderItem onClick={toggleCart}>
+            <HeaderItem onClick={handleToggleCart}>
               <BsCart3 size={25} />
               <p style={{ marginLeft: '5px' }}>
                 {productsCount > 0 && productsCount}
