@@ -10,13 +10,15 @@ import CartItem from '../cart-item/cart-item.component'
 import CustomButton from '../custom-button/custom-button.component'
 import { BsBagCheck } from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom'
-import { UserContext } from '../../contexts/user.context'
 import LoadingPage from '../loading/loading.component'
+import { useSelector } from 'react-redux'
 
 interface CheckoutProps {}
 
 const Checkout: FunctionComponent<CheckoutProps> = () => {
-  const { isAuthenticated } = useContext(UserContext)
+  const { isAuthenticated } = useSelector(
+    (rootReducer: any) => rootReducer.userReducer
+  )
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
 
