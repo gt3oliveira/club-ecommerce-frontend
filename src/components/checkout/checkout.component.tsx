@@ -1,4 +1,4 @@
-import { FunctionComponent, useContext, useEffect } from 'react'
+import { FunctionComponent, useContext, useEffect, useState } from 'react'
 import {
   CheckoutContainer,
   CheckoutProducts,
@@ -11,19 +11,22 @@ import CustomButton from '../custom-button/custom-button.component'
 import { BsBagCheck } from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../../contexts/user.context'
+import LoadingPage from '../loading/loading.component'
 
 interface CheckoutProps {}
 
 const Checkout: FunctionComponent<CheckoutProps> = () => {
   const { isAuthenticated } = useContext(UserContext)
   const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState(false)
 
   const {
     products,
     incrementProductQuantity,
     decrementProductQuantity,
     removeProductToCart,
-    totalCartPrice
+    totalCartPrice,
+    removeCartProducts
   } = useContext(CartContext)
 
   useEffect(() => {
@@ -34,8 +37,17 @@ const Checkout: FunctionComponent<CheckoutProps> = () => {
 
   if (products.length === 0) navigate('/')
 
+  const handleFinishPagament = () => {
+    setIsLoading(true)
+    setTimeout(() => {
+      removeCartProducts()
+      navigate(`/payment-confirmation?success=${true}`)
+    }, 5000)
+  }
+
   return (
     <CheckoutContainer>
+      {isLoading && <LoadingPage />}
       <CheckoutTitle>Checkout</CheckoutTitle>
       <CheckoutProducts>
         {products.map((product) => (
@@ -55,7 +67,9 @@ const Checkout: FunctionComponent<CheckoutProps> = () => {
           currency: 'BRL'
         }).format(totalCartPrice)}
       </CheckoutTotal>
-      <CustomButton icon={<BsBagCheck size={18} />}>
+      <CustomButton
+        onClick={handleFinishPagament}
+        icon={<BsBagCheck size={18} />}>
         Finalizar Compra
       </CustomButton>
     </CheckoutContainer>
