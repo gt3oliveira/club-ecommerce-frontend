@@ -22,8 +22,6 @@ const CartItem: FunctionComponent<CartItemProps> = ({
   incrementProductQuantity,
   removeProductToCart
 }) => {
-  const amountTotalProduct = cartProduct.price * cartProduct.quantity
-
   return (
     <CartItemContainer>
       <CartItemImage imageUrl={cartProduct.imageUrl} />
@@ -33,7 +31,7 @@ const CartItem: FunctionComponent<CartItemProps> = ({
           {Intl.NumberFormat('pt-BR', {
             style: 'currency',
             currency: 'BRL'
-          }).format(amountTotalProduct)}
+          }).format(cartProduct.price)}
         </p>
         <CartItemQuantity>
           <AiOutlineMinus
