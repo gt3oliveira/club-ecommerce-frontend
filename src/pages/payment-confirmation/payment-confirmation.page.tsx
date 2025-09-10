@@ -6,11 +6,11 @@ import {
 } from './payment-confirmation.styles'
 import { AiOutlineCheckCircle, AiOutlineHome } from 'react-icons/ai'
 import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useAppSelector } from '../../hooks/redux.hooks'
 
 const PaymentConfirmation = () => {
-  const { isAuthenticated } = useSelector(
-    (rootReducer: any) => rootReducer.userReducer
+  const { isAuthenticated } = useAppSelector(
+    (rootReducer) => rootReducer.userReducer
   )
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()

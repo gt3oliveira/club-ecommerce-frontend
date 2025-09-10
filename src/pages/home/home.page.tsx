@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import CategoriesPage from '../../components/categories/categories.component'
-import { useSelector } from 'react-redux'
+import { useAppSelector } from '../../hooks/redux.hooks'
 
 const HomePage = () => {
-  const { isAuthenticated } = useSelector(
-    (rootReducer: any) => rootReducer.userReducer
+  const { isAuthenticated } = useAppSelector(
+    (rootReducer) => rootReducer.userReducer
   )
   const navigate = useNavigate()
 

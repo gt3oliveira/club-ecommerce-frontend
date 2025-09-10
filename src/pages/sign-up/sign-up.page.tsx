@@ -20,7 +20,7 @@ import { addDoc, collection } from 'firebase/firestore'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import LoadingPage from '../../components/loading/loading.component'
-import { useSelector } from 'react-redux'
+import { useAppSelector } from '../../hooks/redux.hooks'
 
 type SignupForm = {
   firstName: string
@@ -31,8 +31,8 @@ type SignupForm = {
 }
 
 const SignupPage = () => {
-  const { isAuthenticated } = useSelector(
-    (rootReducer: any) => rootReducer.userReducer
+  const { isAuthenticated } = useAppSelector(
+    (rootReducer) => rootReducer.userReducer
   )
   const navigate = useNavigate()
 

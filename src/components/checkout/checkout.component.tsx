@@ -11,13 +11,13 @@ import CustomButton from '../custom-button/custom-button.component'
 import { BsBagCheck } from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom'
 import LoadingPage from '../loading/loading.component'
-import { useSelector } from 'react-redux'
+import { useAppSelector } from '../../hooks/redux.hooks'
 
 interface CheckoutProps {}
 
 const Checkout: FunctionComponent<CheckoutProps> = () => {
-  const { isAuthenticated } = useSelector(
-    (rootReducer: any) => rootReducer.userReducer
+  const { isAuthenticated } = useAppSelector(
+    (rootReducer) => rootReducer.userReducer
   )
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)

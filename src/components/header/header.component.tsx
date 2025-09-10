@@ -10,13 +10,14 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { useContext } from 'react'
 import { CartContext } from '../../contexts/cart.context'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { signOut } from 'firebase/auth'
 import { auth } from '../../config/firebase.config'
 import { logoutUser } from '../../store/reducers/user/user.actions'
+import { useAppSelector } from '../../hooks/redux.hooks'
 const Header = () => {
-  const { isAuthenticated } = useSelector(
-    (rootReducer: any) => rootReducer.userReducer
+  const { isAuthenticated } = useAppSelector(
+    (rootReducer) => rootReducer.userReducer
   )
   const dispatch = useDispatch()
   const { toggleCart, productsCount } = useContext(CartContext)
