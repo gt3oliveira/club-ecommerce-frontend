@@ -38,21 +38,24 @@ const Header = () => {
     <HeaderContainer>
       <HeaderTitle onClick={handleLogoClick}>CLUB CLOTHING</HeaderTitle>
       <HeaderItems>
-        <HeaderItem onClick={handleExplorerClick}>Explorar</HeaderItem>
-        {!isAuthenticated ? (
+        {!isAuthenticated && (
           <>
             <HeaderItem onClick={handleLoginClick}>Login</HeaderItem>
             <HeaderItem onClick={handleSignUpClick}>Criar Conta</HeaderItem>
           </>
-        ) : (
-          <HeaderItem onClick={() => signOut(auth)}>Sair</HeaderItem>
         )}
-        <HeaderItem onClick={toggleCart}>
-          <BsCart3 size={25} />
-          <p style={{ marginLeft: '5px' }}>
-            {productsCount > 0 && productsCount}
-          </p>
-        </HeaderItem>
+        {isAuthenticated && (
+          <>
+            <HeaderItem onClick={handleExplorerClick}>Explorar</HeaderItem>
+            <HeaderItem onClick={() => signOut(auth)}>Sair</HeaderItem>
+            <HeaderItem onClick={toggleCart}>
+              <BsCart3 size={25} />
+              <p style={{ marginLeft: '5px' }}>
+                {productsCount > 0 && productsCount}
+              </p>
+            </HeaderItem>
+          </>
+        )}
       </HeaderItems>
     </HeaderContainer>
   )
