@@ -1,35 +1,36 @@
-import { FunctionComponent, useContext, useEffect, useState } from 'react'
+import { FunctionComponent, useEffect, useState } from 'react'
 import {
   CheckoutContainer,
   CheckoutProducts,
   CheckoutTitle,
   CheckoutTotal
 } from './checkout.styles'
-import { CartContext } from '../../contexts/cart.context'
 import CartItem from '../cart-item/cart-item.component'
 import CustomButton from '../custom-button/custom-button.component'
 import { BsBagCheck } from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom'
 import LoadingPage from '../loading/loading.component'
 import { useAppSelector } from '../../hooks/redux.hooks'
+import { selectProductsTotalPrice } from '../../store/reducers/cart/cart.selectors'
+import { useDispatch } from 'react-redux'
+import {
+  clearCartProducts,
+  decrementCartProductQuantity,
+  incrementCartProductQuantity,
+  removeProductFromCart
+} from '../../store/reducers/cart/cart.actions'
 
-interface CheckoutProps {}
+const Checkout: FunctionComponent = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const [isLoading, setIsLoading] = useState(false)
 
-const Checkout: FunctionComponent<CheckoutProps> = () => {
   const { isAuthenticated } = useAppSelector(
     (rootReducer) => rootReducer.userReducer
   )
-  const navigate = useNavigate()
-  const [isLoading, setIsLoading] = useState(false)
 
-  const {
-    products,
-    incrementProductQuantity,
-    decrementProductQuantity,
-    removeProductToCart,
-    totalCartPrice,
-    removeCartProducts
-  } = useContext(CartContext)
+  const { products } = useAppSelector((rootReducer) => rootReducer.cartReducer)
+  const totalCartPrice = useAppSelector(selectProductsTotalPrice)
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -42,9 +43,21 @@ const Checkout: FunctionComponent<CheckoutProps> = () => {
   const handleFinishPagament = () => {
     setIsLoading(true)
     setTimeout(() => {
-      removeCartProducts()
+      dispatch(clearCartProducts())
       navigate(`/payment-confirmation?success=${true}`)
     }, 5000)
+  }
+
+  const incrementProductQuantity = (productId: string) => {
+    dispatch(incrementCartProductQuantity(productId))
+  }
+
+  const decrementProductQuantity = (productId: string) => {
+    dispatch(decrementCartProductQuantity(productId))
+  }
+
+  const removeProductToCart = (productId: string) => {
+    dispatch(removeProductFromCart(productId))
   }
 
   return (
