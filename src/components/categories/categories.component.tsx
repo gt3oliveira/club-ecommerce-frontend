@@ -3,7 +3,7 @@ import { CategoriesContainer, CategoriesContent } from './categories.styles'
 import LoadingPage from '../loading/loading.component'
 import CategoryItem from '../category-item/category-item.component'
 import { useDispatch } from 'react-redux'
-import { fetchCategories } from '../../store/reducers/category/category.actions'
+import { fetchCategories } from '../../store/toolkit/category/category.slice'
 import { useAppSelector } from '../../hooks/redux.hooks'
 
 const CategoriesPage = () => {

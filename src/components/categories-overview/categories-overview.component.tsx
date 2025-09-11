@@ -5,7 +5,7 @@ import CategoryOverview from '../category-overview/category-overview.component'
 import { useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../../hooks/redux.hooks'
 import { useDispatch } from 'react-redux'
-import { fetchCategories } from '../../store/reducers/category/category.actions'
+import { fetchCategories } from '../../store/toolkit/category/category.slice'
 
 const CategoriesOverview: FunctionComponent = () => {
   const navigate = useNavigate()
