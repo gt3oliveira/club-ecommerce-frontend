@@ -22,6 +22,7 @@ export const cartReducer = (
         ...state,
         isVisible: !state.isVisible
       }
+
     case CartActionTypes.ADD_PRODUCT_TO_CART: {
       const product = action.payload
       const products = state.products
@@ -44,6 +45,7 @@ export const cartReducer = (
         products: [...products, { ...product, quantity: 1 }]
       }
     }
+
     case CartActionTypes.REMOVE_PRODUCT_FROM_CART: {
       return {
         ...state,
@@ -52,6 +54,7 @@ export const cartReducer = (
         )
       }
     }
+
     case CartActionTypes.INCREMENT_CART_PRODUCT_QUANTITY: {
       return {
         ...state,
@@ -62,6 +65,7 @@ export const cartReducer = (
         )
       }
     }
+
     case CartActionTypes.DECREMENT_CART_PRODUCT_QUANTITY: {
       return {
         ...state,
@@ -72,15 +76,15 @@ export const cartReducer = (
         )
       }
     }
+
     case CartActionTypes.CLEAR_CART_PRODUCTS: {
       return {
         ...state,
         products: []
       }
     }
+
     default:
-      return {
-        ...state
-      }
+      return state
   }
 }

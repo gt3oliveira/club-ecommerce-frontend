@@ -23,15 +23,15 @@ export const userReducer = (
         currentUser: action.payload,
         isAuthenticated: true
       }
+
     case UserActionTypes.LOGOUT:
       return {
         ...state,
         currentUser: null,
         isAuthenticated: false
       }
+
     default:
-      return {
-        ...state
-      }
+      return state
   }
 }
