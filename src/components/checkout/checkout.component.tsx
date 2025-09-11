@@ -18,7 +18,7 @@ import {
   decrementCartProductQuantity,
   incrementCartProductQuantity,
   removeProductFromCart
-} from '../../store/reducers/cart/cart.actions'
+} from '../../store/toolkit/cart/cart.slice'
 
 const Checkout: FunctionComponent = () => {
   const navigate = useNavigate()
