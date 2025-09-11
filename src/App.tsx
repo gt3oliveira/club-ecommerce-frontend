@@ -15,7 +15,7 @@ import Cart from './components/cart/cart.component'
 import Checkout from './components/checkout/checkout.component'
 import PaymentConfirmation from './pages/payment-confirmation/payment-confirmation.page'
 import { useDispatch } from 'react-redux'
-import { loginUser, logoutUser } from './store/reducers/user/user.actions'
+import { loginUser, logoutUser } from './store/toolkit/user/user.slice'
 import { useAppSelector } from './hooks/redux.hooks'
 
 const App: FunctionComponent = () => {
