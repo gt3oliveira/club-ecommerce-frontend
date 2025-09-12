@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Category } from '../../../types/category.types'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '../../../config/firebase.config'
@@ -36,10 +36,13 @@ const categorySlice = createSlice({
       .addCase(fetchCategories.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(fetchCategories.fulfilled, (state, action) => {
-        state.categories = action.payload
-        state.isLoading = false
-      })
+      .addCase(
+        fetchCategories.fulfilled,
+        (state, action: PayloadAction<Category[]>) => {
+          state.categories = action.payload
+          state.isLoading = false
+        }
+      )
       .addCase(fetchCategories.rejected, (state) => {
         state.isLoading = false
       })
