@@ -8,7 +8,7 @@ export const CategoriesContainer = styled.div`
   margin-top: 75px;
 
   @media (max-width: 768px) {
-    margin-top: calc(100vh - 530px);
+    margin-top: 135px;
   }
 `
 

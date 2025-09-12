@@ -24,7 +24,7 @@ export const CheckoutContainer = styled.div`
     }
 
     padding: 30px;
-    margin-top: calc(100vh - 530px);
+    margin-top: 135px;
   }
 `
 

@@ -4,14 +4,9 @@ import Colors from '../../theme/theme.colors'
 export const SignUpContainer = styled.div`
   height: 100%;
   display: flex;
-  // align-items: center;
+  align-items: center;
   justify-content: center;
   padding-top: 95px;
-  // overflow: scroll-y;
-
-  @media (max-width: 768px) {
-    margin-top: calc(100vh - 600px);
-  }
 `
 
 export const SignUpHeadline = styled.p`

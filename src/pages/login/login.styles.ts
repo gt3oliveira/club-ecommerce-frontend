@@ -6,10 +6,6 @@ export const LoginContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  @media (max-width: 768px) {
-    margin-top: calc(100vh - 600px);
-  }
 `
 
 export const LoginHeadline = styled.p`
