@@ -14,4 +14,16 @@ describe('Custom Input', () => {
       border: `2px solid ${Colors.error}`
     })
   })
+
+  it('not error if hasError is false', () => {
+    const { getByPlaceholderText } = render(
+      <CustomInput placeholder="Test input" hasError={false} />
+    )
+
+    getByPlaceholderText('Test input')
+    const input = getByPlaceholderText('Test input')
+    expect(input).toHaveStyle({
+      border: 'none'
+    })
+  })
 })
