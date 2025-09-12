@@ -184,11 +184,13 @@ const SignupPage = () => {
           )}
         </SignUpInputContainer>
 
-        <CustomButton
-          onClick={handleSubmit(handleSubmitPress)}
-          icon={<FiLogIn size={18} />}>
-          Criar Conta
-        </CustomButton>
+        <div style={{ paddingBottom: '20px', width: '100%' }}>
+          <CustomButton
+            onClick={handleSubmit(handleSubmitPress)}
+            icon={<FiLogIn size={18} />}>
+            Criar Conta
+          </CustomButton>
+        </div>
       </SignUpContent>
     </SignUpContainer>
   )

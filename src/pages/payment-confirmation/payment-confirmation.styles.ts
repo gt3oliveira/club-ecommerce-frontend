@@ -18,4 +18,8 @@ export const PaymentConfirmationContent = styled.div`
     font-size: 1.125rem;
     font-weight: 500;
   }
+
+  @media (max-width: 768px) {
+    width: 90%;
+  }
 `

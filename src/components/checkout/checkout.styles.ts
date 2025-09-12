@@ -8,6 +8,7 @@ export const CheckoutContainer = styled.div`
   padding-top: 30px;
   padding-bottom: 30px;
   overflow: hidden;
+  margin-top: 75px;
 
   p {
     color: ${Colors.text.dark};
@@ -23,6 +24,7 @@ export const CheckoutContainer = styled.div`
     }
 
     padding: 30px;
+    margin-top: calc(100vh - 530px);
   }
 `
 

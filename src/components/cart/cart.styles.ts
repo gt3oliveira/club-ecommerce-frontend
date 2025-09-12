@@ -7,6 +7,7 @@ interface CartContainerPros {
 
 export const CartContainer = styled.div<CartContainerPros>`
   position: fixed;
+  z-index: 100;
   height: 100vh;
   width: 100vw;
   right: 0;

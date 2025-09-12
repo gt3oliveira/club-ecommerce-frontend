@@ -8,6 +8,8 @@ export const HeaderContainer = styled.div`
   justify-content: space-between;
   padding: 20px;
   color: ${Colors.text.white};
+  position: fixed;
+  z-index: 10;
 
   @media (max-width: 768px) {
     flex-direction: column;

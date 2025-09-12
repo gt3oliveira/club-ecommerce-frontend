@@ -5,6 +5,11 @@ export const CategoriesContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  margin-top: 75px;
+
+  @media (max-width: 768px) {
+    margin-top: calc(100vh - 530px);
+  }
 `
 
 export const CategoriesContent = styled.div`

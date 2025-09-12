@@ -22,6 +22,7 @@ export const CategoryItemContainer = styled.div<CategoryItemContainerProps>`
   background-image: ${(props) => `url('${props.backgroundImage}')`};
 
   @media (max-width: 768px) {
+    margin-bottom: 20px;
     padding: 0 50px 0 50px;
     height: 300px;
   }
