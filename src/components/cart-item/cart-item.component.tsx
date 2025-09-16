@@ -40,11 +40,13 @@ const CartItem: FunctionComponent<CartItemProps> = ({
               decrementProductQuantity(cartProduct.id)
             }
             size={20}
+            aria-label={`decrementar quantidade ${cartProduct.name}`}
           />
           <p>{cartProduct.quantity}</p>
           <AiOutlinePlus
             onClick={() => incrementProductQuantity(cartProduct.id)}
             size={20}
+            aria-label={`incrementar quantidade ${cartProduct.name}`}
           />
         </CartItemQuantity>
       </CartItemInfo>
@@ -53,6 +55,7 @@ const CartItem: FunctionComponent<CartItemProps> = ({
         <AiOutlineClose
           onClick={() => removeProductToCart(cartProduct.id)}
           size={20}
+          aria-label={`remover ${cartProduct.name}`}
         />
       </RemoveButton>
     </CartItemContainer>
